@@ -322,10 +322,6 @@ with st.sidebar:
     analysis_period = st.slider("Analysis Period (months)", 1, 24, 16, 1,
                               help="Set the period for analysis and prediction")
     
-    prediction_horizon = st.selectbox("Prediction Horizon", 
-                                    ["1 month", "3 months", "6 months", "12 months", "16 months"],
-                                    index=4)
-
 @st.cache_data
 def load_and_preprocess_data(file):
     if file is None:
