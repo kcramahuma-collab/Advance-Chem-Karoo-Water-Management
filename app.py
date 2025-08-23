@@ -25,14 +25,10 @@ st.set_page_config(
 # --- Global brand styling (blue, gold, white) ---
 st.markdown("""
 <style>
-/* App background gradient */
 .stApp { background: linear-gradient(180deg, #f9fbfd 0%, #eef6ff 100%); }
-
-/* Primary typography */
 h1, h2, h3, h4 { color:#0a3d62; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
 p, li, span, div { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
 
-/* Top banner card */
 .karoo-banner {
   background: linear-gradient(135deg, #0a3d62 0%, #1e5aa7 60%);
   color: #fff; padding: 16px 20px; border-radius: 14px; margin-bottom: 16px;
@@ -40,13 +36,11 @@ p, li, span, div { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif
 }
 .karoo-badge { background:#ffc857; color:#0a3d62; border-radius: 10px; padding: 6px 10px; font-weight: 700; }
 
-/* KPI metric cards */
 [data-testid="stMetric"] {
   background: #ffffff; border: 1px solid #d9e6f2; border-radius: 12px; padding: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
 
-/* Tabs */
 .stTabs [role="tab"] {
   background-color: #0a3d620f; color:#0a3d62; border-radius: 8px; padding: 8px 14px;
   font-weight: 600; border: 1px solid #d9e6f2; margin-right:8px;
@@ -55,76 +49,66 @@ p, li, span, div { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif
   background-color: #ffc85722; border-color:#ffc857; color:#0a3d62;
 }
 
-/* Section headers */
 .section-header {
   background:#ffffff; border-left:6px solid #ffc857; padding:10px 14px; border-radius:8px;
   margin: 8px 0 12px 0; color:#0a3d62; box-shadow: 0 3px 10px rgba(0,0,0,0.03);
 }
 
-/* Dataframes */
 .block-container .stDataFrame { border: 1px solid #dfeaf5; border-radius: 10px; }
 
-/* Sidebar - Blue text in white boxes */
 section[data-testid="stSidebar"] {
   background: linear-gradient(180deg, #0a3d62 0%, #1e5aa7 100%);
 }
-section[data-testid="stSidebar"] .stSelectbox, 
-section[data-testid="stSidebar"] .stMultiSelect, 
+
+/* Sidebar input fields background and label */
+section[data-testid="stSidebar"] .stSelectbox,
+section[data-testid="stSidebar"] .stMultiSelect,
 section[data-testid="stSidebar"] .stDateInput,
 section[data-testid="stSidebar"] .stSlider,
 section[data-testid="stSidebar"] .stFileUploader {
   background:#ffffff; padding:8px; border-radius:10px;
 }
+
+/* Sidebar input labels text color */
 section[data-testid="stSidebar"] .stSelectbox label,
 section[data-testid="stSidebar"] .stMultiSelect label,
 section[data-testid="stSidebar"] .stSlider label,
 section[data-testid="stSidebar"] .stFileUploader label {
   color: #0a3d62 !important; font-weight: 600;
 }
-section[data-testid="stSidebar"] * { color:#ffffffdd; }
-section[data-testid="stSidebar"] h2, 
-section[data-testid="stSidebar"] h3 { color:#ffc857; }
 
-/* Footer */
-.footer {
-  text-align:center; font-size:0.9em; color:#607d8b; padding:16px 0 6px 0;
+/* Sidebar file uploader helper text color */
+section[data-testid="stSidebar"] div[data-testid="stFileUploader"] div {
+  color: #0a3d62 !important;
 }
 
-/* Team attribution at bottom */
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3 { color:#ffc857; }
+
+.footer { text-align:center; font-size:0.9em; color:#607d8b; padding:16px 0 6px 0; }
+
 .team-attribution {
   background: linear-gradient(135deg, #0a3d62 0%, #1e5aa7 100%);
   color: white; padding: 20px; border-radius: 12px; margin-top: 30px;
   text-align: center;
 }
+
 .team-member {
   background: rgba(255,200,87,0.2); padding: 10px; border-radius: 8px;
   margin: 5px; display: inline-block; color: #0a3d62 !important;
 }
 
-/* Explanation boxes */
 .explanation-box {
   background: #f8f9fa; border-left: 4px solid #0a3d62; padding: 15px;
-  border-radius: 8px; margin: 10px 0; font-size: 0.95em;
+  border-radius: 8px; margin: 10px 0; font-size: 0.95em; color: #0a3d62;
 }
+
 .explanation-header {
   color: #0a3d62; font-weight: bold; margin-bottom: 8px; font-size: 1.1em;
 }
 </style>
 """, unsafe_allow_html=True)
 
-# ------------------------------- Header --------------------------------------
-st.markdown(
-    """
-    <div class="karoo-banner">
-      <div>
-        <div class="karoo-badge">Karoo Basin • Fracking Water Intelligence</div>
-        <h2 style="margin:6px 0 0 0;">AI-Supervised Water Management & Carbon Accountability</h2>
-        <div>Real-time monitoring • Predictive analytics • Adaptive decisions • ML Emissions baseline (16 months)</div>
-      </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
 # ---------------------------- Utility Functions ------------------------------
 def ensure_datetime(df: pd.DataFrame, col="Timestamp"):
