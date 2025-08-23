@@ -22,6 +22,47 @@ st.set_page_config(
     layout="wide"
 )
 
+# Mobile detection function
+def is_mobile_device():
+    """Detect if user is on mobile device"""
+    user_agent = st.experimental_get_query_params().get('user_agent', [''])[0]
+    mobile_keywords = ['android', 'iphone', 'ipad', 'mobile', 'blackberry', 'windows phone']
+    return any(keyword in user_agent.lower() for keyword in mobile_keywords)
+
+# Initialize mobile detection
+if 'is_mobile' not in st.session_state:
+    st.session_state.is_mobile = is_mobile_device()
+
+# Mobile-optimized utility functions
+def mobile_friendly_columns(num_columns=2):
+    """Automatically adjust columns based on screen size"""
+    if st.session_state.get('is_mobile', False):
+        return st.columns(1)  # Single column on mobile
+    else:
+        return st.columns(num_columns)
+
+def create_mobile_friendly_chart(fig, height=300):
+    """Adjust chart size for mobile devices"""
+    if st.session_state.get('is_mobile', False):
+        fig.set_size_inches(10, 6)  # Smaller for mobile
+    else:
+        fig.set_size_inches(12, 8)
+    return fig
+
+def display_mobile_dataframe(df, height=300):
+    """Display dataframe optimized for mobile"""
+    if st.session_state.get('is_mobile', False):
+        st.dataframe(df, height=200, use_container_width=True)
+    else:
+        st.dataframe(df, height=height, use_container_width=True)
+
+# Get appropriate chart size based on device
+def get_chart_size(default_size):
+    """Return appropriate chart size based on device"""
+    if st.session_state.get('is_mobile', False):
+        return (default_size[0] * 0.7, default_size[1] * 0.7)  # Scale down for mobile
+    return default_size
+
 st.markdown("""
 <style>
 .stApp { background: linear-gradient(180deg, #f9fbfd 0%, #eef6ff 100%); }
@@ -105,8 +146,126 @@ section[data-testid="stSidebar"] h3 { color:#ffc857; }
 .explanation-header {
   color: #0a3d62; font-weight: bold; margin-bottom: 8px; font-size: 1.1em;
 }
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    /* Adjust main container */
+    .stApp {
+        padding: 10px 5px;
+    }
+    
+    /* Mobile-friendly metrics */
+    [data-testid="stMetric"] {
+        padding: 8px;
+        margin: 5px 0;
+        font-size: 0.9em;
+    }
+    
+    /* Stack columns on mobile */
+    .stHorizontalBlock {
+        flex-direction: column;
+    }
+    
+    /* Adjust tabs for mobile */
+    .stTabs [role="tab"] {
+        padding: 6px 10px;
+        font-size: 0.9em;
+        margin: 2px;
+    }
+    
+    /* Smaller section headers */
+    .section-header {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+    
+    /* Mobile-friendly tables */
+    .stDataFrame {
+        font-size: 0.8em;
+        overflow-x: auto;
+    }
+    
+    /* Adjust banner for mobile */
+    .karoo-banner {
+        padding: 12px 15px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    /* Team attribution mobile fix */
+    .team-attribution {
+        padding: 15px;
+    }
+    .team-member {
+        margin: 3px;
+        padding: 8px;
+        font-size: 0.9em;
+    }
+}
+
+/* Touch-friendly buttons and interactions */
+.stButton > button {
+    min-height: 44px; /* Minimum touch target size */
+    padding: 10px 20px;
+}
+
+/* Mobile-optimized sidebar */
+@media (max-width: 768px) {
+    section[data-testid="stSidebar"] {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+    
+    /* Mobile file uploader */
+    .stFileUploader {
+        padding: 5px;
+    }
+}
+
+/* Prevent horizontal scrolling */
+.stApp {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Mobile-friendly charts */
+@media (max-width: 768px) {
+    .stPlotlyChart, .stPyplot {
+        width: 100% !important;
+        height: 300px !important;
+    }
+}
+
+/* Mobile text readability */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    h1 { font-size: 1.5em; }
+    h2 { font-size: 1.3em; }
+    h3 { font-size: 1.1em; }
+}
+
+/* Touch-friendly sliders and inputs */
+.stSlider > div {
+    padding: 5px 0;
+}
+
+/* Mobile navigation improvements */
+@media (max-width: 768px) {
+    .stTabs {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
+
+# Mobile notification
+if st.session_state.get('is_mobile', False):
+    st.sidebar.success("📱 Mobile Mode: Touch-friendly interface enabled")
 
 st.markdown(
     """
@@ -308,8 +467,12 @@ def generate_geological_data():
 
 with st.sidebar:
     st.header("📁 Data Upload")
-    uploaded_file = st.file_uploader("Upload CSV", type=["csv"], 
-                                   help="Upload water quality data with required columns")
+    uploaded_file = st.file_uploader(
+        "Upload CSV", 
+        type=["csv"],
+        help="Upload water quality data with required columns",
+        key="mobile_uploader" if st.session_state.get('is_mobile', False) else "desktop_uploader"
+    )
 
     st.header("🔧 Analysis Mode")
     analysis_mode = st.selectbox(
@@ -387,7 +550,13 @@ with tab1:
     if analysis_mode == "Water Management":
         st.header("💧 Water Management Module")
 
-        col1, col2, col3, col4 = st.columns(4)
+        # Mobile-optimized columns
+        if st.session_state.get('is_mobile', False):
+            col1, col2 = st.columns(2)
+            col3, col4 = st.columns(2)
+        else:
+            col1, col2, col3, col4 = st.columns(4)
+            
         with col1:
             current_flow = filtered_data["Flow_m3_h"].iloc[-1] if not filtered_data.empty else 0
             st.metric("Current Flow", f"{current_flow:.1f} m³/h")
@@ -404,7 +573,8 @@ with tab1:
         st.subheader("Water Quality Assessment")
         if "Quality_Classification" in filtered_data.columns:
             quality_counts = filtered_data["Quality_Classification"].value_counts()
-            fig, ax = plt.subplots(figsize=STANDARD_FIGSIZE)
+            chart_size = get_chart_size(STANDARD_FIGSIZE)
+            fig, ax = plt.subplots(figsize=chart_size)
             quality_counts.plot(kind='bar', ax=ax, color='skyblue')
             ax.set_title("Water Quality Distribution")
             ax.set_ylabel("Count")
@@ -429,7 +599,8 @@ with tab1:
             """, unsafe_allow_html=True)
 
         st.subheader("Real-time Monitoring")
-        fig, axes = plt.subplots(2, 2, figsize=LARGE_FIGSIZE)
+        chart_size = get_chart_size(LARGE_FIGSIZE)
+        fig, axes = plt.subplots(2, 2, figsize=chart_size)
         parameters = [('Flow_m3_h', 'Flow Rate'), ('EC_mS_cm', 'Electrical Conductivity'), 
                      ('Pressure_kPa', 'System Pressure'), ('pH', 'pH Level')]
 
@@ -505,7 +676,8 @@ with tab1:
         """, unsafe_allow_html=True)
 
         st.subheader("Temperature vs Time")
-        fig_temp, ax_temp = plt.subplots(figsize=STANDARD_FIGSIZE)
+        chart_size = get_chart_size(STANDARD_FIGSIZE)
+        fig_temp, ax_temp = plt.subplots(figsize=chart_size)
         for stream in selected_streams:
             stream_data = filtered_data[filtered_data["Stream"] == stream]
             ax_temp.plot(stream_data["Timestamp"], stream_data["Temperature_C"], label=stream)
@@ -548,7 +720,12 @@ with tab1:
                 normal_count = np.sum(anomalies == 1)
                 anomaly_count = np.sum(anomalies == -1)
 
-                col1, col2 = st.columns(2)
+                # Mobile-optimized columns
+                if st.session_state.get('is_mobile', False):
+                    col1, col2 = st.columns(2)
+                else:
+                    col1, col2 = st.columns(2)
+                    
                 with col1:
                     st.metric("Normal Readings", normal_count)
                 with col2:
@@ -558,7 +735,7 @@ with tab1:
                     st.warning(f"🚨 {anomaly_count} anomalies detected. Schedule inspections for these time periods.")
 
                     anomaly_data = filtered_data.iloc[anomalies == -1]
-                    st.dataframe(anomaly_data[["Timestamp", "Stream", "Flow_m3_h", "Pressure_kPa", "EC_mS_cm"]])
+                    display_mobile_dataframe(anomaly_data[["Timestamp", "Stream", "Flow_m3_h", "Pressure_kPa", "EC_mS_cm"]])
 
                     st.markdown("""
                     <div class="explanation-box">
@@ -591,9 +768,10 @@ with tab1:
                 lambda x: (x.str.contains("Suitable")).mean() * 100
             ).round(2)
 
-            st.dataframe(compliance_data.rename("Compliance Rate (%)"))
+            display_mobile_dataframe(compliance_data.rename("Compliance Rate (%)"))
 
-            fig, ax = plt.subplots(figsize=STANDARD_FIGSIZE)
+            chart_size = get_chart_size(STANDARD_FIGSIZE)
+            fig, ax = plt.subplots(figsize=chart_size)
             compliance_data.plot(kind='bar', ax=ax, color='green')
             ax.set_title("Water Quality Compliance by Stream")
             ax.set_ylabel("Compliance Rate (%)")
@@ -641,7 +819,12 @@ with tab1:
                 critical_leaks = all_leaks[all_leaks["severity"] == "Critical"]
                 warning_leaks = all_leaks[all_leaks["severity"] == "Warning"]
 
-                col1, col2 = st.columns(2)
+                # Mobile-optimized columns
+                if st.session_state.get('is_mobile', False):
+                    col1, col2 = st.columns(2)
+                else:
+                    col1, col2 = st.columns(2)
+                    
                 with col1:
                     st.metric("Critical Leaks", len(critical_leaks))
                 with col2:
@@ -662,7 +845,8 @@ with tab1:
                 </div>
                 """, unsafe_allow_html=True)
 
-                fig, ax = plt.subplots(figsize=STANDARD_FIGSIZE)
+                chart_size = get_chart_size(STANDARD_FIGSIZE)
+                fig, ax = plt.subplots(figsize=chart_size)
                 for stream in selected_streams:
                     stream_data = filtered_data[filtered_data["Stream"] == stream]
                     ax.plot(stream_data["Timestamp"], stream_data["Flow_m3_h"], label=f"{stream} Flow", alpha=0.7)
@@ -727,8 +911,8 @@ with tab1:
 
         if len(filtered_data) > 100 and all(col in filtered_data.columns for col in ["Flow_m3_h", "Temperature_C"]):
             with st.spinner("Training predictive models for 16-month forecast..."):
-                # Create a standard figure size
-                fig_size = LARGE_FIGSIZE
+                # Create appropriate figure size based on device
+                fig_size = get_chart_size(LARGE_FIGSIZE)
                 
                 # Flow prediction
                 st.subheader("Water Flow Prediction")
@@ -907,7 +1091,13 @@ with tab1:
             total_volume = filtered_data["Flow_m3_h"].sum()
 
             st.subheader("Emission Factors Configuration")
-            col1, col2, col3 = st.columns(3)
+            # Mobile-optimized columns
+            if st.session_state.get('is_mobile', False):
+                col1, col2 = st.columns(2)
+                col3, col4 = st.columns(2)
+            else:
+                col1, col2, col3 = st.columns(3)
+                
             with col1:
                 treatment_energy = st.slider("Treatment Energy (kWh/m³)", 0.1, 2.0, 0.8, 0.1)
             with col2:
@@ -919,7 +1109,13 @@ with tab1:
                                                  energy_carbon, 0.15)
 
             st.subheader("Carbon Emission Results (16-Month Baseline)")
-            col1, col2, col3, col4 = st.columns(4)
+            # Mobile-optimized columns
+            if st.session_state.get('is_mobile', False):
+                col1, col2 = st.columns(2)
+                col3, col4 = st.columns(2)
+            else:
+                col1, col2, col3, col4 = st.columns(4)
+                
             with col1:
                 st.metric("Total Water", f"{total_volume:,.0f} m³")
             with col2:
@@ -947,7 +1143,8 @@ with tab1:
             """, unsafe_allow_html=True)
 
             st.subheader("Emission Breakdown")
-            fig, ax = plt.subplots(figsize=SMALL_FIGSIZE)  
+            chart_size = get_chart_size(SMALL_FIGSIZE)
+            fig, ax = plt.subplots(figsize=chart_size)
             emission_types = ['Treatment', 'Transport', 'Operations']
             emission_values = [
                 emissions['treatment_emissions'],
@@ -1000,7 +1197,8 @@ with tab1:
         st.subheader("Karoo Basin Geological Characteristics")
 
         st.markdown("#### 1. Mineral Content vs Depth")
-        fig1, ax1 = plt.subplots(figsize=STANDARD_FIGSIZE)
+        chart_size = get_chart_size(STANDARD_FIGSIZE)
+        fig1, ax1 = plt.subplots(figsize=chart_size)
 
         for mineral in ['Na_mg_L', 'Cl_mg_L', 'Ca_mg_L', 'Mg_mg_L', 'SO4_mg_L', 'TDS_mg_L']:
             ax1.scatter(geo_data[mineral], geo_data['Depth_m'], alpha=0.6, s=50, label=mineral)
@@ -1024,7 +1222,8 @@ with tab1:
         """, unsafe_allow_html=True)
 
         st.markdown("#### 2. Porosity vs Depth")
-        fig2, ax2 = plt.subplots(figsize=STANDARD_FIGSIZE)
+        chart_size = get_chart_size(STANDARD_FIGSIZE)
+        fig2, ax2 = plt.subplots(figsize=chart_size)
 
         z = np.polyfit(geo_data['Porosity_pct'], geo_data['Depth_m'], 1)
         p = np.poly1d(z)
@@ -1050,7 +1249,8 @@ with tab1:
         """, unsafe_allow_html=True)
 
         st.markdown("#### 3. Permeability vs Porosity")
-        fig3, ax3 = plt.subplots(figsize=STANDARD_FIGSIZE)
+        chart_size = get_chart_size(STANDARD_FIGSIZE)
+        fig3, ax3 = plt.subplots(figsize=chart_size)
 
         ax3.scatter(geo_data['Porosity_pct'], geo_data['Permeability_mD'], alpha=0.6, s=50)
 
@@ -1078,7 +1278,8 @@ with tab1:
         """, unsafe_allow_html=True)
 
         st.markdown("#### 4. Porosity vs Lithology")
-        fig4, ax4 = plt.subplots(figsize=STANDARD_FIGSIZE)
+        chart_size = get_chart_size(STANDARD_FIGSIZE)
+        fig4, ax4 = plt.subplots(figsize=chart_size)
 
         if 'Lithology' in geo_data.columns:
             lithology_order = ['Sandstone', 'Siltstone', 'Limestone', 'Shale']
@@ -1112,7 +1313,13 @@ with tab1:
         st.subheader("Geological Summary Statistics")
 
         if not geo_data.empty:
-            col1, col2, col3, col4 = st.columns(4)
+            # Mobile-optimized columns
+            if st.session_state.get('is_mobile', False):
+                col1, col2 = st.columns(2)
+                col3, col4 = st.columns(2)
+            else:
+                col1, col2, col3, col4 = st.columns(4)
+                
             with col1:
                 st.metric("Average Depth", f"{geo_data['Depth_m'].mean():.0f} m")
             with col2:
@@ -1125,7 +1332,7 @@ with tab1:
             if 'Lithology' in geo_data.columns:
                 st.write("**Lithology Distribution:**")
                 lith_counts = geo_data['Lithology'].value_counts()
-                st.dataframe(lith_counts)
+                display_mobile_dataframe(lith_counts)
 
         st.subheader("Implications for Hydraulic Fracturing Operations")
 
@@ -1152,12 +1359,18 @@ with tab1:
 
 with tab2:
     st.header("📊 Raw Data")
-    st.write(data)    
+    display_mobile_dataframe(data)    
 
 st.markdown("---")
 st.header("🔄 Integrated Water Management Process")
 
-col1, col2, col3, col4, col5 = st.columns(5)
+# Mobile-optimized columns
+if st.session_state.get('is_mobile', False):
+    col1, col2 = st.columns(2)
+    col3, col4 = st.columns(2)
+    col5 = st.columns(1)[0]
+else:
+    col1, col2, col3, col4, col5 = st.columns(5)
 
 with col1:
     st.markdown("""
