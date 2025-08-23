@@ -238,7 +238,10 @@ def predict_water_demand_16months(data, months=16):
     # Prepare data for forecasting
     df = data.copy()
     df = df.set_index('Timestamp')
-    df = df.resample('D').mean().ffill()  # Resample to daily frequency
+    
+    # FIX: Select only numeric columns before resampling
+    numeric_cols = df.select_dtypes(include=[np.number]).columns
+    df = df[numeric_cols].resample('D').mean().ffill()  # Only numeric columns
     
     # Feature engineering for long-term forecasting
     df['day_of_year'] = df.index.dayofyear
@@ -271,6 +274,14 @@ def predict_water_demand_16months(data, months=16):
         'Temperature_C': df['Temperature_C'].mean()  # Use average temperature
     })
     
+    # Make predictions
+    predictions = model.predict(future_features)
+    
+    return future_dates, predictions, model.score(X, y)
+    # Make predictions
+    predictions = model.predict(future_features)
+    
+    return future_dates, predictions, model.score(X, y)
     # Make predictions
     predictions = model.predict(future_features)
     
