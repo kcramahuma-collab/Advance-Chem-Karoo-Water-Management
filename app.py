@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filternings('ignore')
 
 # Standard figure sizes for consistency
 STANDARD_FIGSIZE = (12, 6)
@@ -59,7 +59,6 @@ section[data-testid="stSidebar"] {
   background: linear-gradient(180deg, #0a3d62 0%, #1e5aa7 100%);
 }
 
-/* Sidebar input fields background and label */
 section[data-testid="stSidebar"] .stSelectbox,
 section[data-testid="stSidebar"] .stMultiSelect,
 section[data-testid="stSidebar"] .stDateInput,
@@ -716,34 +715,7 @@ with tab1:
                 <ul style="color: #0a3d62;">
                 <li>Pipeline integrity is maintained</li>
                 <li>System pressure and flow patterns are normal</li>
-                <li>Equipment is functioning properly</li>
-                </ul>
-
-                Continue regular monitoring to maintain system integrity and quickly detect any future issues.
-                </div>
-                """, unsafe_allow_html=True)
-        else:
-            st.warning("Flow and pressure data required for leak detection")
-
-    elif analysis_mode == "Predictive Analytics":
-        st.header("🤖 Predictive Analytics Module")
-        st.subheader("16-Month Water Demand Forecast")
-
-        if len(filtered_data) > 100 and all(col in filtered_data.columns for col in ["Flow_m3_h", "Temperature_C"]):
-            with st.spinner("Training predictive models for 16-month forecast..."):
-                # Create a standard figure size
-                fig_size = LARGE_FIGSIZE
-                
-                # Flow prediction
-                st.subheader("Water Flow Prediction")
-                fig_flow, ax_flow = plt.subplots(figsize=fig_size)
-                
-                for stream in selected_streams:
-                    # Get historical data for this stream
-                    stream_data = filtered_data[filtered_data["Stream"] == stream].copy()
-                    stream_data = stream_data.set_index("Timestamp")
-                    
-                    # Resample to daily frequency
+                <li it
                     daily_data = stream_data.resample('D').mean(numeric_only=True)
                     
                     # Prepare features for historical period
@@ -1140,99 +1112,4 @@ with tab1:
         1. <strong>Depth Trends</strong>: Deeper formations require higher pressure for fracturing but may yield 
            water with higher mineral content requiring more treatment.
 
-        2. <strong>Porosity-Permeability Relationship</strong>: High porosity zones are preferred targets for 
-           water extraction, but permeability determines flow rates and extraction efficiency.
-
-        3. <strong>Lithological Controls</strong>: Sandstone layers are optimal for water storage and extraction, 
-           while shale layers may require more intensive fracturing.
-
-        4. <strong>Mineral Content</strong>: Deeper water sources will likely require more extensive treatment 
-           for agricultural use, increasing operational costs.
-
-        5. <strong>Formation Stability</strong>: Understanding geological properties helps in designing safe and 
-           effective fracturing operations that minimize environmental impact.
-        </div>
-        """, unsafe_allow_html=True)
-
-with tab2:
-    st.header("📊 Raw Data")
-    st.write(data)    
-
-st.markdown("---")
-st.header("🔄 Integrated Water Management Process")
-
-col1, col2, col3, col4, col5 = st.columns(5)
-
-with col1:
-    st.markdown("""
-    <div style="background-color: #e7f3ff; padding: 15px; border-radius: 10px; border-left: 5px solid #2196F3;">
-        <strong>Fracking Operations</strong><br>
-        → Oil & Gas Extraction<br>
-        → Produced Water Generation<br>
-        → Initial Water Treatment
-    </div>
-    """, unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div style="background-color: #e7f3ff; padding: 15px; border-radius: 10px; border-left: 5px solid #2196F3;">
-        <strong>Water Treatment</strong><br>
-        → Advanced Filtration<br>
-        → Reverse Osmosis<br>
-        → Chemical Treatment<br>
-        → Quality Monitoring
-    </div>
-    """, unsafe_allow_html=True)
-
-with col3:
-    st.markdown("""
-    <div style="background-color: #e7f3ff; padding: 15px; border-radius: 10px; border-left: 5px solid #2196F3;">
-        <strong>Treated Water Storage</strong><br>
-        → Reservoir Management<br>
-        → Quality Assurance<br>
-        → Distribution Readiness<br>
-        → Emergency Supply
-    </div>
-    """, unsafe_allow_html=True)
-
-with col4:
-    st.markdown("""
-    <div style="background-color: #e7f3ff; padding: 15px; border-radius: 10px; border-left: 5px solid #2196F3;">
-        <strong>Water Distribution</strong><br>
-        → Pipeline Network<br>
-        → Pump Stations<br>
-        → Pressure Control<br>
-        → Leak Monitoring
-    </div>
-    """, unsafe_allow_html=True)
-
-with col5:
-    st.markdown("""
-    <div style="background-color: #e8f5e9; padding: 15px; border-radius: 10px; border-left: 5px solid #4CAF50;">
-        <strong>Final Usage</strong><br>
-        → Agricultural Irrigation<br>
-        → Livestock Watering<br>
-        → Environmental Release<br>
-        → Community Supply
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("""
-<div class="team-attribution">
-    <h3 style="color: #ffc857; margin-bottom: 15px;">👩🏽‍🔬👨🏽‍🔬 Advance Chem Assignment Team</h3>
-    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <div class="team-member"><strong>Kekeletso Ramahuma</strong><br>2302543</div>
-        <div class="team-member"><strong>Gessica Cumbane</strong><br>1853353</div>
-        <div class="team-member"><strong>Kefiloe Letsie</strong><br>2320312</div>
-        <div class="team-member"><strong>Lebohang Mabe</strong><br>2326751</div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<div class="footer">
-<b>AI-Powered Karoo Water Intelligence System</b><br/>
-Real-time monitoring • Predictive analytics • Adaptive decision-making • Carbon accountability<br/>
-Built with Streamlit • Integrating ML Emissions Calculator methodology
-</div>
-""", unsafe_allow_html=True)
+        2. <strong>Porosity-Permeability Relationship</strong>: High porosity zon
