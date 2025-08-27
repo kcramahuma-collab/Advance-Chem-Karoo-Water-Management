@@ -411,7 +411,10 @@ def show_cover_page():
         </ul>
     </div>
     """, unsafe_allow_html=True)
-    
+    st.image("https://www.researchgate.net/profile/Michael-Sweet/publication/342335630/figure/fig1/AS:904523887423500@1592666708900/Outcrops-of-the-Permian-Karoo-Supergroup-Karoo-Basin-South-Africa-Ridge-forming-cliffs.ppm", 
+                 use_container_width=True)
+    st.markdown('<p class="image-caption">Karoo Basin</p>', unsafe_allow_html=True)
+
     st.markdown("""
     <h3 style="margin-bottom: 20px;">🚨 Critical Challenges in the Karoo:</h3>
     """, unsafe_allow_html=True)
