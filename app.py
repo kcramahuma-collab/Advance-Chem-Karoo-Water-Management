@@ -34,7 +34,6 @@ st.set_page_config(
 # Force light mode with comprehensive CSS
 st.markdown(f"""
 <style>
-    /* Base styles */
     :root {{
         --primary: {PRIMARY_COLOR};
         --secondary: {SECONDARY_COLOR};
@@ -43,20 +42,14 @@ st.markdown(f"""
         --accent: {ACCENT_COLOR};
         --success: {SUCCESS_COLOR};
     }}
-    
-    /* Force light mode globally */
     html, body, [data-testid="stAppViewContainer"], 
     [data-testid="stSidebar"], .stApp {{
         background-color: {BACKGROUND_COLOR} !important;
         color: {TEXT_COLOR} !important;
     }}
-    
-    /* Text elements */
     h1, h2, h3, h4, h5, h6, p, div, span, li {{
         color: {TEXT_COLOR} !important;
     }}
-    
-    /* Cover page styling - WHITE TEXT for specified elements */
     .cover-container {{
         background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%) !important;
         padding: 40px;
@@ -65,11 +58,9 @@ st.markdown(f"""
         margin-bottom: 30px;
         box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     }}
-    
     .cover-container * {{
         color: white !important; /* Force all text in cover to be white */
     }}
-    
     .cover-title {{
         font-size: 3.5em;
         font-weight: 800;
@@ -78,14 +69,12 @@ st.markdown(f"""
         color: {SECONDARY_COLOR} !important; /* Only title is gold */
         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     }}
-    
     .cover-subtitle {{
         font-size: 1.8em;
         text-align: center;
         margin-bottom: 40px;
         color: white !important; /* Force white */
     }}
-    
     .stat-card {{
         background: rgba(255, 255, 255, 0.1);
         border-radius: 15px;
@@ -97,24 +86,20 @@ st.markdown(f"""
         border: 1px solid rgba(255, 255, 255, 0.2);
         transition: transform 0.3s ease;
     }}
-    
     .stat-card:hover {{
         transform: translateY(-5px);
         background: rgba(255, 255, 255, 0.15);
     }}
-    
     .stat-number {{
         font-size: 2.5em;
         font-weight: 700;
         color: white !important; /* Force white for numbers */
         margin-bottom: 10px;
     }}
-    
     .stat-label {{
         font-size: 1.2em;
         color: white !important; /* Force white for labels */
     }}
-    
     .karoo-banner {{
         background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%);
         color: {PRIMARY_COLOR} !important;
@@ -122,7 +107,6 @@ st.markdown(f"""
         border-radius: 14px;
         margin-bottom: 20px;
     }}
-    
     .karoo-badge {{
         background: {SECONDARY_COLOR} !important;
         color: {PRIMARY_COLOR} !important; /* Blue text for the badge */
@@ -132,7 +116,6 @@ st.markdown(f"""
         display: inline-block;
         margin-bottom: 10px;
     }}
-    
     .karoo-banner h2,
     .karoo-banner h3,
     .karoo-banner h4,
@@ -144,7 +127,6 @@ st.markdown(f"""
         background: linear-gradient(180deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%) !important;
         border-right: 1px solid #d9e6f2;
     }}
-    
     [data-testid="stSidebar"] .sidebar-section {{
         background-color: rgba(255, 255, 255, 0.9) !important;
         border-radius: 8px;
@@ -152,7 +134,6 @@ st.markdown(f"""
         margin: 15px 0;
         border-left: 4px solid {SECONDARY_COLOR};
     }}
-    
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3,
@@ -161,7 +142,6 @@ st.markdown(f"""
         margin: 0;
         font-size: 1.2em;
     }}
-    
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] li,
     [data-testid="stSidebar"] span,
@@ -183,8 +163,9 @@ st.markdown(f"""
         border-radius: 8px !important;
     }}
     .stSlider div[data-testid="stMarkdownContainer"] {{
-        color: {TEXT_COLOR} !important;
+        color: {SECONDARY_COLOR} !important;
         font-weight: bold !important;
+        font-size: 1.1rem !important
     }}
     
     /* Header */
@@ -408,7 +389,7 @@ def show_cover_page():
         </div>
         """, unsafe_allow_html=True)
     with col2:
-        st.image("https://images.unsplash.com/photo-1584697964358-3e14ca57658b?w=600&h=400&fit=crop", 
+        st.image("https://www.cnps.com/wp-content/uploads/2024/04/hydraulic-fracturing-explained-1024x848.jpg", 
                  use_container_width=True)
         st.markdown('<p class="image-caption">Fracking Operation Diagram</p>', unsafe_allow_html=True)
     
