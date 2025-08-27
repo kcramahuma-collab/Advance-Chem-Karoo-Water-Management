@@ -395,7 +395,7 @@ def show_cover_page():
     
     st.markdown("""
     <div class="info-card">
-        <h4>🌵 The Karoo Basin Context</h4>
+        <h4>🌵 The Karoo Basin</h4>
         <p>The Karoo Basin is a vast semi-arid region in South Africa, spanning roughly 400,000 km² across the central and western parts of the country. 
         It is characterized by wide open plains, sparse vegetation, and a unique ecosystem supporting sheep farming and small-scale agriculture. 
         The region is known for its rich geological formations, including significant shale gas potential, making it a site of interest for hydraulic fracturing (fracking) operations.</p>
