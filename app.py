@@ -56,21 +56,122 @@ st.markdown(f"""
         color: {TEXT_COLOR} !important;
     }}
     
-    /* Sidebar styling */
+    /* Cover page styling - WHITE TEXT for specified elements */
+    .cover-container {{
+        background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%) !important;
+        padding: 40px;
+        border-radius: 15px;
+        color: white !important; /* Force white text */
+        margin-bottom: 30px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }}
+    
+    .cover-container * {{
+        color: white !important; /* Force all text in cover to be white */
+    }}
+    
+    .cover-title {{
+        font-size: 3.5em;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 10px;
+        color: {SECONDARY_COLOR} !important; /* Only title is gold */
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }}
+    
+    .cover-subtitle {{
+        font-size: 1.8em;
+        text-align: center;
+        margin-bottom: 40px;
+        color: white !important; /* Force white */
+    }}
+    
+    .stat-card {{
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        min-width: 180px;
+        text-align: center;
+        margin: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease;
+    }}
+    
+    .stat-card:hover {{
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+    }}
+    
+    .stat-number {{
+        font-size: 2.5em;
+        font-weight: 700;
+        color: white !important; /* Force white for numbers */
+        margin-bottom: 10px;
+    }}
+    
+    .stat-label {{
+        font-size: 1.2em;
+        color: white !important; /* Force white for labels */
+    }}
+    
+    .karoo-banner {{
+        background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%);
+        color: {PRIMARY_COLOR} !important;
+        padding: 20px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+    }}
+    
+    .karoo-badge {{
+        background: {SECONDARY_COLOR} !important;
+        color: {PRIMARY_COLOR} !important; /* Blue text for the badge */
+        border-radius: 10px;
+        padding: 6px 12px;
+        font-weight: 700;
+        display: inline-block;
+        margin-bottom: 10px;
+    }}
+    
+    .karoo-banner h2,
+    .karoo-banner h3,
+    .karoo-banner h4,
+    .karoo-banner p,
+    .karoo-banner div {{
+        color: white !important;
+    }}
     [data-testid="stSidebar"] {{
-        background-color: {BACKGROUND_COLOR} !important;
+        background: linear-gradient(180deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%) !important;
         border-right: 1px solid #d9e6f2;
     }}
     
+    [data-testid="stSidebar"] .sidebar-section {{
+        background-color: rgba(255, 255, 255, 0.9) !important;
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin: 15px 0;
+        border-left: 4px solid {SECONDARY_COLOR};
+    }}
+    
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] h4 {{
+        color: {SECONDARY_COLOR} !important;
+        margin: 0;
+        font-size: 1.2em;
+    }}
+    
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] li,
+    [data-testid="stSidebar"] span,
     [data-testid="stSidebar"] .stSelectbox label,
     [data-testid="stSidebar"] .stMultiSelect label,
     [data-testid="stSidebar"] .stSlider label,
     [data-testid="stSidebar"] .stFileUploader label {{
-        color: {TEXT_COLOR} !important;
+        color: {BACKGROUND_COLOR} !important;
         font-weight: 600;
     }}
-    
-    /* Input controls */
     .stSelectbox select, .stMultiSelect select,
     .stTextInput input, .stTextArea textarea,
     .stSlider input, .stNumberInput input,
@@ -81,8 +182,6 @@ st.markdown(f"""
         border: 1px solid #d9e6f2 !important;
         border-radius: 8px !important;
     }}
-    
-    /* Slider value display */
     .stSlider div[data-testid="stMarkdownContainer"] {{
         color: {TEXT_COLOR} !important;
         font-weight: bold !important;
@@ -90,7 +189,7 @@ st.markdown(f"""
     
     /* Header */
     [data-testid="stHeader"] {{
-        background-color: {PRIMARY_COLOR} !important;
+        background-color: {SECONDARY_COLOR} !important;
     }}
     
     /* Metrics */
@@ -124,61 +223,6 @@ st.markdown(f"""
         border-bottom: 3px solid {SECONDARY_COLOR} !important;
         color: {PRIMARY_COLOR} !important;
         font-weight: bold;
-    }}
-    
-    /* Cover page styling */
-    .cover-container {{
-        background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%) !important;
-        padding: 40px;
-        border-radius: 15px;
-        color: white;
-        margin-bottom: 30px;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }}
-    
-    .cover-title {{
-        font-size: 3.5em;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 10px;
-        color: {SECONDARY_COLOR};
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }}
-    
-    .cover-subtitle {{
-        font-size: 1.8em;
-        text-align: center;
-        margin-bottom: 40px;
-        color: #f0f0f0;
-    }}
-    
-    .stat-card {{
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        padding: 20px;
-        min-width: 180px;
-        text-align: center;
-        margin: 10px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: transform 0.3s ease;
-    }}
-    
-    .stat-card:hover {{
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.15);
-    }}
-    
-    .stat-number {{
-        font-size: 2.5em;
-        font-weight: 700;
-        color: {SECONDARY_COLOR};
-        margin-bottom: 10px;
-    }}
-    
-    .stat-label {{
-        font-size: 1.2em;
-        color: #f0f0f0;
     }}
     
     /* Info cards */
@@ -219,8 +263,6 @@ st.markdown(f"""
     .info-card-green h4 {{
         color: {SUCCESS_COLOR} !important;
     }}
-    
-    /* Explanation boxes */
     .explanation-box {{
         background: #f8f9fa;
         border-left: 4px solid {PRIMARY_COLOR};
@@ -229,34 +271,12 @@ st.markdown(f"""
         margin: 10px 0;
         font-size: 0.95em;
     }}
-    
     .explanation-header {{
         color: {PRIMARY_COLOR};
         font-weight: bold;
         margin-bottom: 8px;
         font-size: 1.1em;
     }}
-    
-    /* Banner */
-    .karoo-banner {{
-        background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%);
-        color: white;
-        padding: 20px;
-        border-radius: 14px;
-        margin-bottom: 20px;
-    }}
-    
-    .karoo-badge {{
-        background: {SECONDARY_COLOR};
-        color: {PRIMARY_COLOR};
-        border-radius: 10px;
-        padding: 6px 12px;
-        font-weight: 700;
-        display: inline-block;
-        margin-bottom: 10px;
-    }}
-    
-    /* Team section */
     .team-attribution {{
         background: linear-gradient(135deg, {PRIMARY_COLOR} 0%, {ACCENT_COLOR} 100%);
         color: white;
@@ -265,7 +285,10 @@ st.markdown(f"""
         margin-top: 30px;
         text-align: center;
     }}
-    
+    .team-attribution h3 {{
+        color: {SECONDARY_COLOR} !important;
+        margin-bottom: 15px;
+    }}
     .team-member {{
         background: rgba(255,200,87,0.9);
         padding: 10px 15px;
@@ -275,7 +298,6 @@ st.markdown(f"""
         color: {PRIMARY_COLOR};
         font-weight: bold;
     }}
-    
     /* Footer */
     .footer {{
         text-align: center;
@@ -284,7 +306,6 @@ st.markdown(f"""
         padding: 16px 0 6px 0;
         margin-top: 20px;
     }}
-    
     /* Image caption */
     .image-caption {{
         color: {SECONDARY_COLOR};
@@ -292,12 +313,12 @@ st.markdown(f"""
         text-align: center;
         font-weight: bold;
     }}
-    
     /* Ensure all text is visible */
     .stAlert, .stWarning, .stError, .stSuccess, .stInfo {{
         color: {TEXT_COLOR} !important;
     }}
 </style>
+
 <script>
 // Force light mode with JavaScript as backup
 function forceLightMode() {{
@@ -340,7 +361,6 @@ observer.observe(document.body, {{
 setInterval(forceLightMode, 1000);
 </script>
 """, unsafe_allow_html=True)
-
 def show_cover_page():
     st.markdown("""
     <div class="cover-container">
@@ -479,19 +499,14 @@ def show_cover_page():
     </div>
     """, unsafe_allow_html=True)
 
-# Banner at the top of the app
 st.markdown(f"""
 <div class="karoo-banner">
     <div class="karoo-badge">Karoo Basin • Fracking Water Intelligence</div>
     <h2 style="margin:6px 0 0 0;color:white;">AI-Supervised Water Management & Carbon Accountability</h2>
-    <div style="color:white;">Real-time monitoring • Predictive analytics • Adaptive decisions • ML Emissions baseline (16 months)</div>
+    <div style="color:{SECONDARY_COLOR};">Real-time monitoring • Predictive analytics • Adaptive decisions • ML Emissions baseline (16 months)</div>
     <div style="color:white;margin-top:6px;">Advance Chem Assignment Team</div>
 </div>
 """, unsafe_allow_html=True)
-
-# Rest of your functions (ensure_datetime, safe_col, calculate_salinity, calculate_sar, 
-# classify_water_quality, detect_leaks_advanced, calculate_carbon_footprint, 
-# predict_water_demand_16months, generate_geological_data) remain unchanged
 
 def ensure_datetime(df: pd.DataFrame, col="Timestamp"):
     if col in df.columns:
