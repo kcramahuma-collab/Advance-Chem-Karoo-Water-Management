@@ -367,7 +367,7 @@ def show_cover_page():
     st.markdown("""
     <div style="padding: 20px;">
         <h2 style="text-align: center; margin-bottom: 30px;">
-            Addressing the Water-Energy Nexus in South Africa's Karoo Basin
+            Modeling Water-Energy Flows in the Karoo Basin
         </h2>
     </div>
     """, unsafe_allow_html=True)
