@@ -488,7 +488,6 @@ st.markdown(f"""
     <div class="karoo-badge">Karoo Basin • Fracking Water Intelligence</div>
     <h2 style="margin:6px 0 0 0;color:white;">AI-Supervised Water Management & Carbon Accountability</h2>
     <div style="color:{SECONDARY_COLOR};">Real-time monitoring • Predictive analytics • Adaptive decisions • ML Emissions baseline (16 months)</div>
-    <div style="color:white;margin-top:6px;">Advance Chem Assignment Team</div>
 </div>
 """, unsafe_allow_html=True)
 
