@@ -1414,10 +1414,6 @@ with tab1:
             </div>
             """, unsafe_allow_html=True)
             
-            st.subheader("Daily Carbon Footprint Analysis")
-            daily_data = filtered_data.copy()
-            daily_data['Date'] = pd.to_datetime(daily_data['Timestamp']).dt.date
-            
             daily_totals = daily_data.groupby('Date').agg({
                 'Flow_m3_h': 'sum',
                 'EC_mS_cm': 'mean',
