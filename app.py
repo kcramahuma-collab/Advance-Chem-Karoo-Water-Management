@@ -11,27 +11,23 @@ from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
 
-# Set consistent color scheme
-PRIMARY_COLOR = "#0a3d62"  # Dark blue
-SECONDARY_COLOR = "#ffc857"  # Golden yellow
-BACKGROUND_COLOR = "#f0f4f8"  # Light blue-gray
-TEXT_COLOR = "#0a3d62"  # Dark blue
-ACCENT_COLOR = "#1e5799"  # Medium blue
-SUCCESS_COLOR = "#4CAF50"  # Green
+PRIMARY_COLOR = "#0a3d62"  
+SECONDARY_COLOR = "#ffc857" 
+BACKGROUND_COLOR = "#f0f4f8" 
+TEXT_COLOR = "#0a3d62" 
+ACCENT_COLOR = "#1e5799" 
+SUCCESS_COLOR = "#4CAF50" 
 
 STANDARD_FIGSIZE = (12, 6)
 LARGE_FIGSIZE = (14, 8)
 SMALL_FIGSIZE = (10, 6)
 
-# Page configuration
 st.set_page_config(
     page_title="Karoo Basin Water Intelligence",
     page_icon="🌵",
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# Force light mode with comprehensive CSS
 st.markdown(f"""
 <style>
     :root {{
@@ -145,11 +141,15 @@ st.markdown(f"""
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] li,
     [data-testid="stSidebar"] span,
-    [data-testid="stSidebar"] .stSelectbox label,
     [data-testid="stSidebar"] .stMultiSelect label,
     [data-testid="stSidebar"] .stSlider label,
     [data-testid="stSidebar"] .stFileUploader label {{
-        color: {BACKGROUND_COLOR} !important;
+        color: white !important;
+        font-weight: 600;
+    }}
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] .stFileUploader label {{
+        color: {ACCENT_COLOR} ! important;
         font-weight: 600;
     }}
     .stSelectbox select, .stMultiSelect select,
@@ -158,38 +158,36 @@ st.markdown(f"""
     .stDateInput input, .stTimeInput input,
     .stFileUploader > div > div {{
         background-color: white !important;
-        color: {TEXT_COLOR} !important;
+        color: white !important;
         border: 1px solid #d9e6f2 !important;
         border-radius: 8px !important;
     }}
     .stSlider div[data-testid="stMarkdownContainer"] {{
-        color: {SECONDARY_COLOR} !important;
+        color: {ACCENT_COLOR} !important;
         font-weight: bold !important;
         font-size: 1.1rem !important
     }}
-    
-    /* Header */
+    .stSlider div[data-baseweb="slider"] > div {{
+        border: 8px solid white !important;
+        background-color: white !important;
+        border-radius: 4px !important;
+        height: 8px !important;
+    }}
     [data-testid="stHeader"] {{
         background-color: {SECONDARY_COLOR} !important;
     }}
-    
-    /* Metrics */
     [data-testid="stMetric"] {{
         background-color: white !important;
         border: 1px solid #d9e6f2 !important;
         border-radius: 12px !important;
         padding: 15px !important;
     }}
-    
     [data-testid="stMetricLabel"] {{
         color: {TEXT_COLOR} !important;
     }}
-    
     [data-testid="stMetricValue"] {{
         color: {PRIMARY_COLOR} !important;
     }}
-    
-    /* Tabs */
     .stTabs [role="tab"] {{
         background-color: #f8f9fa !important;
         color: {TEXT_COLOR} !important;
@@ -198,15 +196,12 @@ st.markdown(f"""
         border: 1px solid #d9e6f2 !important;
         margin-right: 4px !important;
     }}
-    
     .stTabs [role="tab"][aria-selected="true"] {{
         background-color: white !important;
         border-bottom: 3px solid {SECONDARY_COLOR} !important;
         color: {PRIMARY_COLOR} !important;
         font-weight: bold;
     }}
-    
-    /* Info cards */
     .info-card {{
         background: rgba(255, 255, 255, 0.9);
         border-radius: 10px;
@@ -215,12 +210,10 @@ st.markdown(f"""
         border-left: 4px solid {SECONDARY_COLOR};
         color: {TEXT_COLOR} !important;
     }}
-    
     .info-card h4 {{
         color: {PRIMARY_COLOR} !important;
         margin-top: 0;
     }}
-    
     .info-card-blue {{
         background: rgba(173, 216, 230, 0.3);
         border-left: 5px solid {ACCENT_COLOR};
@@ -228,11 +221,9 @@ st.markdown(f"""
         border-radius: 10px;
         margin: 15px 0;
     }}
-    
     .info-card-blue h4 {{
         color: {ACCENT_COLOR} !important;
     }}
-    
     .info-card-green {{
         background: rgba(76, 175, 80, 0.15);
         border-left: 5px solid {SUCCESS_COLOR};
@@ -240,7 +231,6 @@ st.markdown(f"""
         border-radius: 10px;
         margin: 15px 0;
     }}
-    
     .info-card-green h4 {{
         color: {SUCCESS_COLOR} !important;
     }}
@@ -279,7 +269,6 @@ st.markdown(f"""
         color: {PRIMARY_COLOR};
         font-weight: bold;
     }}
-    /* Footer */
     .footer {{
         text-align: center;
         font-size: 0.9em;
@@ -287,32 +276,24 @@ st.markdown(f"""
         padding: 16px 0 6px 0;
         margin-top: 20px;
     }}
-    /* Image caption */
     .image-caption {{
         color: {SECONDARY_COLOR};
         margin-top: 8px;
         text-align: center;
         font-weight: bold;
     }}
-    /* Ensure all text is visible */
     .stAlert, .stWarning, .stError, .stSuccess, .stInfo {{
         color: {TEXT_COLOR} !important;
     }}
 </style>
 
 <script>
-// Force light mode with JavaScript as backup
 function forceLightMode() {{
-    // Remove any dark mode classes
     document.querySelectorAll('*').forEach(el => {{
         el.classList.remove('dark', 'Dark', 'theme-dark');
     }});
-    
-    // Set light theme attributes
     document.documentElement.setAttribute('data-theme', 'light');
     document.documentElement.style.setProperty('color-scheme', 'light');
-    
-    // Set meta theme color
     let metaTheme = document.querySelector('meta[name="theme-color"]');
     if (!metaTheme) {{
         metaTheme = document.createElement('meta');
@@ -321,15 +302,11 @@ function forceLightMode() {{
     }}
     metaTheme.content = '{BACKGROUND_COLOR}';
 }}
-
-// Apply on load and continuously monitor
 if (document.readyState === 'loading') {{
     document.addEventListener('DOMContentLoaded', forceLightMode);
 }} else {{
     forceLightMode();
 }}
-
-// Set up mutation observer to catch any dynamic changes
 const observer = new MutationObserver(forceLightMode);
 observer.observe(document.body, {{ 
     childList: true, 
@@ -337,11 +314,27 @@ observer.observe(document.body, {{
     attributes: true,
     attributeFilter: ['class', 'data-theme']
 }});
-
-// Periodic check as safety net
 setInterval(forceLightMode, 1000);
 </script>
 """, unsafe_allow_html=True)
+
+st.markdown(f"""
+<style>
+    .stFileUploader label p {{
+        color: white !important;
+    }}
+    .stFileUploader .st-emotion-cache-1aehpvj {{
+        color: blue !important;
+    }}
+    .stFileUploader button {{
+        color: {ACCENT_COLOR} !important;
+    }}
+    .stFileUploader [data-testid="stFileUploaderFileName"] {{
+        color: white !important;
+    }}
+</style>
+""", unsafe_allow_html=True)
+
 def show_cover_page():
     st.markdown("""
     <div class="cover-container">
